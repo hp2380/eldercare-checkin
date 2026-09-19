@@ -58,5 +58,29 @@ create index if not exists checkins_family_date_idx
 alter table public.families enable row level security;
 alter table public.checkins enable row level security;
 
+-- Keep the browser-facing roles out. Combined with RLS above, a request
+-- carrying a publishable/anon key can't read or write either table.
 revoke all on public.families  from anon, authenticated;
 revoke all on public.checkins  from anon, authenticated;
+
+-- ---------------------------------------------------------------------------
+-- Let the server in.
+--
+-- Some Supabase projects don't automatically grant privileges on newly
+-- created tables, which shows up as: permission denied for table families
+-- Granting explicitly means this file works on a fresh project either way.
+--
+-- This does NOT weaken anything. service_role is the identity behind the
+-- secret key, which only ever lives on the server (see src/lib/supabase.ts).
+-- It already bypasses RLS by design; these grants are the separate, older
+-- permission system that sits in front of it.
+-- ---------------------------------------------------------------------------
+grant usage on schema public to service_role;
+
+grant select, insert, update, delete on public.families to service_role;
+grant select, insert, update, delete on public.checkins to service_role;
+
+-- Both tables use uuid primary keys, so there are no sequences today and this
+-- grants nothing. It's here so that adding a bigserial column later can't
+-- reintroduce the same permission error.
+grant usage, select on all sequences in schema public to service_role;
