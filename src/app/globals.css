@@ -1,0 +1,227 @@
+/* Deliberately plain CSS. The whole app is two screens.
+   Base font is 18px rather than the usual 16px, and tap targets are large,
+   because the parent page has to work for a 75-year-old on a phone. */
+
+:root {
+  --bg: #f7f5f2;
+  --surface: #ffffff;
+  --text: #1a1a1a;
+  --muted: #5c5c5c;
+  --border: #d9d4cd;
+
+  --good: #17692f;
+  --good-bg: #e6f4ea;
+  --warn: #8a4b00;
+  --warn-bg: #fdf0dd;
+  --bad: #9b1c1c;
+  --bad-bg: #fdecec;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 18px;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+}
+
+main {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 24px 16px 64px;
+}
+
+/* ---------- parent page ---------- */
+
+.greeting {
+  font-size: 28px;
+  font-weight: 600;
+  margin: 8px 0 4px;
+}
+
+.greeting-sub {
+  color: var(--muted);
+  margin: 0 0 28px;
+  font-size: 18px;
+}
+
+.big-button {
+  display: block;
+  width: 100%;
+  min-height: 108px;
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 3px solid var(--text);
+  border-radius: 16px;
+  background: var(--surface);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1.3;
+  text-align: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.big-button:active {
+  transform: scale(0.99);
+}
+
+.big-button:focus-visible {
+  outline: 4px solid #1d4ed8;
+  outline-offset: 3px;
+}
+
+.big-button[data-done="true"] {
+  border-color: var(--good);
+  background: var(--good-bg);
+  color: var(--good);
+  cursor: default;
+}
+
+.big-button[disabled] {
+  opacity: 0.75;
+}
+
+.button-note {
+  display: block;
+  margin-top: 8px;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.tap-error {
+  margin: 0 0 20px;
+  padding: 16px;
+  border-radius: 12px;
+  background: var(--bad-bg);
+  color: var(--bad);
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* ---------- dashboard ---------- */
+
+.status-card {
+  padding: 24px;
+  border-radius: 16px;
+  border: 2px solid transparent;
+  margin-bottom: 32px;
+}
+
+.status-card[data-tone="good"] {
+  background: var(--good-bg);
+  border-color: var(--good);
+  color: var(--good);
+}
+
+.status-card[data-tone="warn"] {
+  background: var(--warn-bg);
+  border-color: var(--warn);
+  color: var(--warn);
+}
+
+.status-card[data-tone="bad"] {
+  background: var(--bad-bg);
+  border-color: var(--bad);
+  color: var(--bad);
+}
+
+.status-headline {
+  font-size: 26px;
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+
+.status-detail {
+  margin: 0;
+  font-size: 18px;
+}
+
+.section-title {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 12px;
+}
+
+.history {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.history li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.history li:last-child {
+  border-bottom: none;
+}
+
+.history li[data-today="true"] {
+  background: #fbfaf8;
+  font-weight: 600;
+}
+
+.day-label {
+  flex: 0 0 auto;
+}
+
+.day-marks {
+  color: var(--muted);
+  font-size: 17px;
+  text-align: right;
+}
+
+.day-marks[data-empty="true"] {
+  color: var(--bad);
+}
+
+.footnote {
+  color: var(--muted);
+  font-size: 15px;
+  margin-top: 28px;
+}
+
+/* ---------- shared ---------- */
+
+.notice {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.notice h1 {
+  font-size: 22px;
+  margin: 0 0 10px;
+}
+
+.notice p {
+  margin: 0;
+  color: var(--muted);
+}
