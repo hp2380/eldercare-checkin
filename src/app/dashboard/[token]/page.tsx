@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { familyByChildToken, checkinsSince } from "@/lib/families";
 import { recentDates, todayIn, timeIn, formatDay } from "@/lib/dates";
+import AutoRefresh from "./auto-refresh";
 
 export const dynamic = "force-dynamic";
 
@@ -83,8 +84,10 @@ export default async function DashboardPage({
 
       <p className="footnote">
         Times are shown in {family.parent_label}&apos;s timezone (
-        {family.timezone}). Refresh the page for the latest.
+        {family.timezone}). This page updates itself every minute.
       </p>
+
+      <AutoRefresh />
     </>
   );
 }
